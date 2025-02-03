@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solar Savings Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            max-width: 400px;
+            margin: 0 auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Solar Savings Calculator</h1>
+    <label for="monthlyConsumption">Monthly Consumption (Peso):</label>
+    <input type="number" id="monthlyConsumption" placeholder="Enter your monthly consumption in Peso">
+
+    <label for="solarSize">Solar System Size (kW):</label>
+    <input type="number" id="solarSize" placeholder="Enter the solar system size in kW">
+
+    <button onclick="calculateSavings()">Calculate Savings</button>
+
+    <div class="result">
+        <h2>Estimated Monthly Savings: ₱<span id="savings">0.00</span></h2>
+    </div>
+</div>
+
+<script>
+    function calculateSavings() {
+        // Get user inputs
+        const monthlyConsumption = parseFloat(document.getElementById("monthlyConsumption").value);
+        const solarSize = parseFloat(document.getElementById("solarSize").value);
+        const pricePerKwh = 12.9; // Price per kWh in Peso
+
+        // Validate inputs
+        if (isNaN(monthlyConsumption) || isNaN(solarSize) || monthlyConsumption <= 0 || solarSize <= 0) {
+            alert("Please enter valid values for both fields.");
+            return;
+        }
+
+        // Adjusting the expected energy generation per kW to a more realistic value (e.g., 109.6 kWh per kW per month)
+        const generationPerKwPerMonth = 109.6; // kWh per kW per month
+
+        // Calculate solar generation in kWh per month
+        const solarGenerationKwh = solarSize * generationPerKwPerMonth;
+
+        // Calculate savings
+        const savings = solarGenerationKwh * pricePerKwh;
+
+        // Display result
+        document.getElementById("savings").innerText = savings.toFixed(2);
+    }
+</script>
+
+</body>
+</html>
